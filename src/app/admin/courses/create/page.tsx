@@ -6,7 +6,6 @@ import { courseCategories, courseLevels, courseSchema, CourseSchemaType, CourseS
 import { ArrowLeft, Loader2, PlusIcon, SparkleIcon } from 'lucide-react'
 import Link from 'next/link'
 import { zodResolver } from "@hookform/resolvers/zod"
-
 import { useForm, UseFormProps } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'

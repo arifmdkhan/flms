@@ -43,7 +43,8 @@ export async function CreateCourse(
       } else {
         return {
           status: "error",
-          message: "You are a bot! If this is a mistake, please contact support.",
+          message:
+            "You are a bot! If this is a mistake, please contact support.",
         };
       }
     }
@@ -59,7 +60,7 @@ export async function CreateCourse(
     const data = await prisma.course.create({
       data: {
         ...validation.data,
-        userId: session?.user?.id as string,
+        userId: session.user.id as string,
       },
     });
     return {

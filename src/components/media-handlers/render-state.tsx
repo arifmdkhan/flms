@@ -43,6 +43,7 @@ export function RenderErrorState() {
 }
 
 export function RenderUploadState({ previewUrl, isDeleting, handleRemoveFile }: { previewUrl: string, isDeleting: boolean, handleRemoveFile: () => void }) {
+  
     return (
         <div>
             <Image

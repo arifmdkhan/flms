@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { RenderEmptyState, RenderErrorState, RenderUploadingState, RenderUploadState } from './render-state'
 import { toast } from 'sonner'
 import { v4 as uuidv4 } from 'uuid';
+import { useConstructUrl } from '@/hooks/use-construct-url'
 
 interface UploaderState {
     id: string | null;
@@ -24,6 +25,8 @@ interface UploaderProps {
     onChange?: (value: string) => void;
 }
 export default function Uploader({ value, onChange }: UploaderProps) {
+   
+    const fileUrl = useConstructUrl(value || '')
     const [fileState, setFileState] = useState<UploaderState>({
         file: null,
         error: false,
@@ -33,6 +36,7 @@ export default function Uploader({ value, onChange }: UploaderProps) {
         isDeleting: false,
         fileType: 'image',
         key: value,
+        objectUrl: fileUrl
     })
 
 
@@ -131,6 +135,7 @@ export default function Uploader({ value, onChange }: UploaderProps) {
         }
     }
 
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization
     const onDrop = useCallback((acceptedFiles: File[]) => {
         // Do something with the files
         if (acceptedFiles.length > 0) {
@@ -218,7 +223,10 @@ export default function Uploader({ value, onChange }: UploaderProps) {
         if (fileState.error) {
             return <RenderErrorState />
         }
-        if (fileState.objectUrl) {
+      
+        
+        if (fileState.objectUrl && value) {
+            
             return (
                 <RenderUploadState
                     previewUrl={fileState.objectUrl}

@@ -1,14 +1,11 @@
 
-
 import { adminGetCourses } from '@/app/data/admin/admin-get-courses'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
-import React from 'react'
 import AdminCourseCard from './_components/admin-course-card';
 
 export default async function CoursesPage() {
   const data = await adminGetCourses();
-
 
   return (
     <>
