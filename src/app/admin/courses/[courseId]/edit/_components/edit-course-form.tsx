@@ -42,7 +42,7 @@ export default function EditCourseForm({ data }: EditCourseFormProps) {
             status: data.status,
             slug: data.slug,
             smallDescription: data.smallDescription,
-        
+
         },
     })
 
@@ -144,7 +144,7 @@ export default function EditCourseForm({ data }: EditCourseFormProps) {
                         <FormItem className='w-full'>
                             <FormLabel>Thumbnail Image</FormLabel>
                             <FormControl>
-                                <Uploader onChange={field.onChange} value={field.value} />
+                                <Uploader fileTypeAccepted='image' onChange={field.onChange} value={field.value} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -282,7 +282,7 @@ export default function EditCourseForm({ data }: EditCourseFormProps) {
                         </>
                     ) : (
                         <>
-                           Update Course
+                            Update Course
                             <PlusIcon className='ml-1' size={16} />
                         </>
                     )
