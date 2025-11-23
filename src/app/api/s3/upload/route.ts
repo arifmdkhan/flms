@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3 } from "@/lib/s3-client";
 import { error } from "console";
-import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
+import arcjet, {fixedWindow } from "@/lib/arcjet";
 import { getServerSession } from "@/lib/get-session";
 import { requireAdmin } from "@/app/data/admin/require-admin";
 
@@ -19,12 +19,7 @@ export const fileUploadSchema = z.object({
 });
 
 const aj = arcjet
-  .withRule(
-    detectBot({
-      mode: "LIVE",
-      allow: [],
-    })
-  )
+ 
   .withRule(
     fixedWindow({
       mode: "LIVE",

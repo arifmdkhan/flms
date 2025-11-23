@@ -1,25 +1,25 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-  engineType      = "client" 
+  provider   = "prisma-client"
+  output     = "../src/generated/prisma"
+  engineType = "client"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id
+  id            String       @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean      @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
   courses       Course[]
+  enrollment    Enrollment[]
 
   role       String?
   banned     Boolean?  @default(false)
@@ -94,6 +94,7 @@ model Course {
   user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
   chapter          Chapter[]
+  enrollment       Enrollment[]
 }
 
 enum CourseLevel {
@@ -114,7 +115,7 @@ model Chapter {
   position  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  course    Course   @relation(fields: [courseId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  String
   lessons   Lesson[]
 }
@@ -122,13 +123,34 @@ model Chapter {
 model Lesson {
   id           String  @id @default(uuid())
   title        String
-  position  Int
+  position     Int
   description  String?
   thumbnailKey String?
   videoKey     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   chapterId String
+}
+
+model Enrollment {
+  id        String           @id @default(uuid())
+  amount    Int
+  status    EnrollmentStatus @default(Pending)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String
+
+  @@unique([userId, courseId])
+}
+
+enum EnrollmentStatus {
+  Pending
+  Active
+  Cancelled
 }

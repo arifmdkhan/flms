@@ -28,4 +28,8 @@ export const auth = betterAuth({
     }),
     admin() 
   ],
+  trustedOrigins: [
+  "http://localhost:3000",
+  "http://192.168.1.7:3000",
+]
 });
